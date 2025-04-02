@@ -329,6 +329,7 @@ TEST(MatrixImplementation, OutOfBoundsThrowsException) {
     });
 
     EXPECT_THROW(matrix.get_value(4, 4), std::out_of_range);
+    EXPECT_THROW(matrix.set_value(4, 4), std::out_of_range);
 }
 
 // 1. Read values from a file into the matrix:

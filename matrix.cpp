@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <iostream>
+#include <stdexcept>
 #include <vector>
 
 // implementation of functions declared in matrix.hpp goes here
@@ -52,6 +53,10 @@ Matrix::Matrix(std::vector<std::vector<int>> nums) {
     
     for (size_t i = 0; i < size; ++i) {
         data[i] = new int[size];
+
+        if (nums[i].size() != size)
+            throw std::invalid_argument("Row size does not match column size!");
+        
         for (size_t j = 0; j < size; ++j) {
             data[i][j] = nums[i][j]; // Because we're using 
         }
@@ -59,7 +64,11 @@ Matrix::Matrix(std::vector<std::vector<int>> nums) {
 } 
 
 Matrix Matrix::operator+(const Matrix &rhs) const {
+    if (this->get_size() != rhs.get_size())
+        throw std::invalid_argument("Matrices are not the same size!");
     Matrix result(rhs.size); // Create new matrix of same size
+
+    
     
     for (size_t i = 0; i < rhs.size; ++i) {
         for (size_t j = 0; j < rhs.size; ++j) {
@@ -71,6 +80,9 @@ Matrix Matrix::operator+(const Matrix &rhs) const {
 }
 
 Matrix Matrix::operator*(const Matrix &rhs) const {
+    if (this->get_size() != rhs.get_size()) // Don't need to check rows or columns size because our matrices are all square ones!
+        throw std::invalid_argument("Matrices are not the same size!");
+
     Matrix result(this->size); // Create new matrix (will be same size bc of how matrix multiplication works with same-sized square matrices)
     
     for (size_t i = 0; i < this->size; ++i) { // Iterate over row of this matrix
@@ -88,10 +100,15 @@ Matrix Matrix::operator*(const Matrix &rhs) const {
 }
 
 void Matrix::set_value(std::size_t i, std::size_t j, int value) {
+    if (i < 0 || j < 0 || i >= this->get_size() || j >= this->get_size())
+        throw std::out_of_range("Out of range of matrix!");
+    
     this->data[i][j] = value; // sets value at row i, column j to 'value'
 }
 
 int Matrix::get_value(std::size_t i, std::size_t j) const {
+    if (i < 0 || j < 0 || i >= this->get_size() || j >= this->get_size())
+        throw std::out_of_range("Out of range of matrix!");
     return this->data[i][j]; // gets value at row i, column j
 }
 
@@ -121,6 +138,8 @@ int Matrix::sum_diagonal_minor() const {
 }
 
 void Matrix::swap_rows(std::size_t r1, std::size_t r2) {
+    if (r1 < 0 || r2 < 0 || r1 >= this->get_size() || r2 >= this->get_size())
+        throw std::out_of_range("Out of range of matrix!");
     // C++ allows us to do this with the standard library!
     // It's exactly what it looks like... we're swapping the memory from r1 and r2!
     std::swap(this->data[r1], this->data[r2]);
@@ -129,6 +148,9 @@ void Matrix::swap_rows(std::size_t r1, std::size_t r2) {
 }
 
 void Matrix::swap_cols(std::size_t c1, std::size_t c2) {
+    if (c1 < 0 || c2 < 0 || c1 >= this->get_size() || c2 >= this->get_size())
+        throw std::out_of_range("Out of range of matrix!");
+    
     // Like the swap row function, we can similarly use the swap method here.
     // However, since columns span multiple different pointers, we have to iterate through each colum and swap the individual entries manually!
     for (size_t i = 0; i < this->size; ++i) {
