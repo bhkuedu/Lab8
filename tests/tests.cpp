@@ -363,7 +363,7 @@ TEST(MatrixImplementation, AddMatrices_Basic) {
 
     Matrix matrix1(initial1);
     Matrix matrix2(initial2);
-    auto result = matrix1.(matrix2);
+    auto result = matrix1 + matrix2;
 
     std::vector<std::vector<int>> expected = {
         { 2, 2, 2 },
