@@ -20,6 +20,10 @@ int main(int argc, char *argv[]) {
     int N;
     file >> N; // get matrix size
 
+    
+    if (N < 0)
+        throw std::invalid_argument("Matrix size cannot be invalid!");
+
     file.ignore(); // make sure to blank this newline
 
     
