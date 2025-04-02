@@ -330,6 +330,12 @@ TEST(MatrixImplementation, OutOfBoundsThrowsException) {
 
     EXPECT_THROW(matrix.get_value(4, 4), std::out_of_range);
     EXPECT_THROW(matrix.set_value(4, 4, 2), std::out_of_range);
+
+    // Additional out of bounds exceptions I expect
+    EXPECT_THROW(matrix.swap_rows(-1, 2), std::out_of_range);
+    EXPECT_THROW(matrix.swap_rows(0, 3), std::out_of_range);
+    EXPECT_THROW(matrix.swap_columns(-1, 2), std::out_of_range);
+    EXPECT_THROW(matrix.swap_columns(0, 3), std::out_of_range);
 }
 
 // 1. Read values from a file into the matrix:

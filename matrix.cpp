@@ -104,6 +104,8 @@ void Matrix::set_value(std::size_t i, std::size_t j, int value) {
         throw std::out_of_range("Out of range of matrix!");
     
     this->data[i][j] = value; // sets value at row i, column j to 'value'
+
+    // this->print_matrix();
 }
 
 int Matrix::get_value(std::size_t i, std::size_t j) const {
@@ -144,7 +146,7 @@ void Matrix::swap_rows(std::size_t r1, std::size_t r2) {
     // It's exactly what it looks like... we're swapping the memory from r1 and r2!
     std::swap(this->data[r1], this->data[r2]);
 
-    this->print_matrix(); // print resulting matrix
+    // this->print_matrix(); // print resulting matrix
 }
 
 void Matrix::swap_cols(std::size_t c1, std::size_t c2) {
@@ -157,5 +159,5 @@ void Matrix::swap_cols(std::size_t c1, std::size_t c2) {
         std::swap(this->data[i][c1], this->data[i][c2]); // Swap element from one column to the other
     }
 
-    this->print_matrix(); // Print resulting matrix
+    // this->print_matrix(); // Print resulting matrix
 } 
