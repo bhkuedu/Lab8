@@ -330,3 +330,91 @@ TEST(MatrixImplementation, OutOfBoundsThrowsException) {
 
     EXPECT_THROW(matrix.get_value(4, 4), std::out_of_range);
 }
+
+// 1. Read values from a file into the matrix:
+// Implement a function to load matrix data from a user-specified file. The first line of the file should contain an integer N indicating the size of the matrices, followed by two N × N matrices. After reading the file, print the matrices with proper formatting, such as aligned columns. Note that N can be any valid positive integer.
+// 2. Add two matrices and display the result:
+// Implement a function that adds two matrices and displays the resulting matrix.
+// 3. Multiply two matrices and display the result:
+// Implement a function that multiplies two matrices and displays the resulting matrix.
+// Please refer to the link for the matrix multiplication: https://www.mathsisfun.com/algebra/matrix-multiplying.html
+// 4. Get the sum of matrix diagonal elements:
+// Implement a function to calculate and display the sum of the main and secondary diagonal elements of a matrix.
+// 5. Swap matrix rows and display the result:
+// Implement a function that takes a matrix and two-row indices as input (with indexing starting at 0). If both indices are within valid bounds, swap the specified rows and output the resulting matrix.
+// 6. Swap matrix columns and display the result:
+// Implement a function that takes a matrix and two-column indices as input (with indexing starting at 0). If both indices are within valid bounds, swap the specified rows and output the resulting matrix.
+// 7. Update matrix rows and display the result:
+// Implement a function that accepts a matrix, a row index, a column index, and a new value. If both indices are valid (with indexing starting at 0), update the element at the specified position and display the resulting matrix.
+
+// ADDITIONAL TESTS
+
+TEST(MatrixImplementation, AddMatrices_Basic) {
+    std::vector<std::vector<int>> initial1 = {
+        { 1, 1, 1 },
+        { 1, 1, 1 },
+        { 1, 1, 1 },
+    };
+    std::vector<std::vector<int>> initial2 = {
+        { 1, 1, 1 },
+        { 1, 1, 1 },
+        { 1, 1, 1 },
+    };
+
+    Matrix matrix1(initial1);
+    Matrix matrix2(initial2);
+    auto result = matrix1.add_matrices(matrix2);
+
+    std::vector<std::vector<int>> expected = {
+        { 2, 2, 2 },
+        { 2, 2, 2 },
+        { 2, 2, 2 },
+    };
+
+    for (int i = 0; i < expected.size(); i++) {
+        for (int j = 0; j < expected.size(); j++) {
+            EXPECT_EQ(result.get_value(i, j), expected[i][j]);
+        }
+    }
+}
+
+TEST(MatrixImplementation, MultiplyMatrices_Basic) {
+    std::vector<std::vector<int>> initial1 = {
+        { 1, 1, 1 },
+        { 1, 1, 1 },
+        { 1, 1, 1 },
+    };
+    std::vector<std::vector<int>> initial2 = {
+        { 1, 1, 1 },
+        { 1, 1, 1 },
+        { 1, 1, 1 },
+    };
+
+    Matrix matrix1(initial1);
+    Matrix matrix2(initial2);
+    auto result = matrix1.multiply_matrices(matrix2);
+
+    std::vector<std::vector<int>> expected = {
+        { 3, 3, 3 },
+        { 3, 3, 3 },
+        { 3, 3, 3 },
+    };
+
+    for (int i = 0; i < expected.size(); i++) {
+        for (int j = 0; j < expected.size(); j++) {
+            EXPECT_EQ(result.get_value(i, j), expected[i][j]);
+        }
+    }
+}
+
+TEST(MatrixImplementation, DiagonalSum_Basic) {
+    std::vector<std::vector<int>> initial = {
+        { 1, 2, 3 },
+        { 4, 5, 6 },
+        { 7, 8, 9 },
+    };
+
+    Matrix matrix(initial);
+    EXPECT_EQ(matrix.sum_diagonal_major(), 15);
+    EXPECT_EQ(matrix.sum_diagonal_minor(), 15);
+}
